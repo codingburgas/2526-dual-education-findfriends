@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friend Connect</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo">💫 Friend Connect</h1>
+                <div class="nav-menu">
+                    <a href="index.html" class="nav-link active">Home</a>
+                    <a href="pages/messages.html" class="nav-link">💬 Messages</a>
+                    <a href="pages/about.html" class="nav-link">About Us</a>
+                    <a href="pages/contact.html" class="nav-link">Contact</a>
+                    <a href="pages/faq.html" class="nav-link">FAQ</a>
+                    <a href="pages/privacy.html" class="nav-link">Privacy</a>
+                    <a href="pages/terms.html" class="nav-link">Terms</a>
+                </div>
+                <div class="nav-actions">
+                    <input type="text" id="search" placeholder="Search profiles..." class="search-bar">
+                    <button id="filter-btn" class="filter-btn">🔍 Filters</button>
+                    <button id="messages-icon" class="messages-icon" title="Messages">
+                        💬 <span class="message-badge hidden">0</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Filter Panel -->
+        <aside id="filter-panel" class="filter-panel">
+            <div class="filter-header">
+                <h3>Filters</h3>
+                <button id="close-filter" class="close-btn">✕</button>
+            </div>
+            
+            <div class="filter-group">
+                <label for="age-filter">Age Range</label>
+                <div class="age-range">
+                    <input type="number" id="min-age" placeholder="Min" min="18" max="100">
+                    <input type="number" id="max-age" placeholder="Max" min="18" max="100">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label>Interests</label>
+                <div id="interests-filter" class="interests-filter">
+                    <!-- Interests will be dynamically generated -->
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label for="sort-by">Sort By</label>
+                <select id="sort-by">
+                    <option value="recent">Most Recent</option>
+                    <option value="age-asc">Age (Low to High)</option>
+                    <option value="age-desc">Age (High to Low)</option>
+                    <option value="name">Name (A-Z)</option>
+                </select>
+            </div>
+
+            <button id="apply-filters" class="apply-btn">Apply Filters</button>
+            <button id="reset-filters" class="reset-btn">Reset</button>
+        </aside>
+
+        <!-- Main Content -->
+        <section class="main-content">
+            <div class="stats-bar">
+                <span id="profile-count">Showing <strong>0</strong> profiles</span>
+                <button id="toggle-view" class="view-toggle">⊞ Grid View</button>
+            </div>
+
+            <section id="profile-list" class="profile-list">
+                <!-- Profiles will be dynamically generated here -->
+            </section>
+
+            <div id="no-results" class="no-results hidden">
+                <p>😢 No profiles found. Try adjusting your filters!</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Friend Connect. All rights reserved. | <a href="pages/privacy.html" style="color: var(--primary-color); text-decoration: none;">Privacy</a> | <a href="pages/terms.html" style="color: var(--primary-color); text-decoration: none;">Terms</a></p>
+    </footer>
+    <script src="js/utils.js"></script>
+    <script src="js/profiles.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
