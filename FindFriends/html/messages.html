@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - Friend Connect</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo">💫 Friend Connect</h1>
+                <div class="nav-menu">
+                    <a href="../index.html" class="nav-link">Home</a>
+                    <a href="messages.html" class="nav-link active">💬 Messages</a>
+                    <a href="about.html" class="nav-link">About Us</a>
+                    <a href="privacy.html" class="nav-link">Privacy</a>
+                    <a href="terms.html" class="nav-link">Terms</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="messages-container">
+            <!-- Conversations Sidebar -->
+            <aside class="conversations-sidebar">
+                <div class="sidebar-header">
+                    <h2>💬 Conversations</h2>
+                </div>
+                <div class="conversations-list" id="conversations-list">
+                    <div style="padding: 2rem; text-align: center; color: var(--text-muted);">
+                        <p>No conversations yet.</p>
+                        <p style="font-size: 0.9rem;">Go to Home to start messaging!</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Chat Area -->
+            <section class="chat-area">
+                <div class="empty-state" id="empty-state">
+                    <div class="empty-state-icon">💬</div>
+                    <h3>Welcome to Messages</h3>
+                    <p>Select a conversation to start chatting</p>
+                </div>
+
+                <div id="chat-content" style="display: none; height: 100%; display: flex; flex-direction: column;">
+                    <div class="chat-header">
+                        <h3 id="chat-name"></h3>
+                    </div>
+                    <div class="messages-display" id="messages-display"></div>
+                    <div class="chat-input-area">
+                        <textarea class="chat-input" id="chat-input" placeholder="Type your message..."></textarea>
+                        <button class="chat-send-btn" id="chat-send-btn">Send</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Friend Connect. All rights reserved. | <a href="privacy.html" style="color: var(--primary-color); text-decoration: none;">Privacy</a> | <a href="terms.html" style="color: var(--primary-color); text-decoration: none;">Terms</a></p>
+    </footer>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/profiles.js"></script>
+    <script>
+        // Load conversations from localStorage
+        let conversations = StorageHelper.load('friend-connect-conversations', []);
+        let currentConversation = null;
+
+        // Render conversations list
+        function renderConversationsList() {
+            const list = document.getElementById('conversations-list');
+            if (conversations.length === 0) {
+                list.innerHTML = '<div style="padding: 2rem; text-align: center; color: var(--text-muted);"><p>No conversations yet.</p><p style="font-size: 0.9rem;">Go to Home to start messaging!</p></div>';
+                return;
+            }
+
+            list.innerHTML = conversations.map(conv => {
+                const lastMessage = conv.messages.length > 0 ? conv.messages[conv.messages.length - 1] : null;
+                const preview = lastMessage ? (lastMessage.sent ? 'You: ' : '') + lastMessage.text.substring(0, 30) : 'No messages yet';
+                return `
+                    <div class="conversation-item ${currentConversation?.id === conv.id ? 'active' : ''}" data-conv-id="${conv.id}">
+                        <img src="${conv.profileImage}" alt="${conv.profileName}" class="conversation-avatar">
+                        <div class="conversation-info">
+                            <div class="conversation-name">${conv.profileName}</div>
+                            <div class="conversation-preview">${preview}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Add listeners
+            list.querySelectorAll('.conversation-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const convId = parseInt(item.dataset.convId);
+                    currentConversation = conversations.find(c => c.id === convId);
+                    showConversation();
+                });
+            });
+        }
+
+        // Show conversation
+        function showConversation() {
+            if (!currentConversation) return;
+
+            document.getElementById('empty-state').style.display = 'none';
+            document.getElementById('chat-content').style.display = 'flex';
+            document.getElementById('chat-name').textContent = currentConversation.profileName;
+
+            const display = document.getElementById('messages-display');
+            display.innerHTML = currentConversation.messages.map(msg => `
+                <div class="message-row ${msg.sent ? 'sent' : 'received'}">
+                    <div>
+                        <div class="message-bubble">${msg.text}</div>
+                        <div class="message-time">${new Date(msg.timestamp).toLocaleTimeString()}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            setTimeout(() => {
+                display.scrollTop = display.scrollHeight;
+            }, 0);
+
+            renderConversationsList();
+        }
+
+        // Send message
+        document.getElementById('chat-send-btn')?.addEventListener('click', () => {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (text === '' || !currentConversation) return;
+
+            currentConversation.messages.push({
+                text: text,
+                sent: true,
+                timestamp: new Date().toISOString()
+            });
+
+            setTimeout(() => {
+                const responses = ['That sounds great! 😊', 'I totally agree! 👍', 'Tell me more!', 'That\'s awesome! 🎉'];
+                currentConversation.messages.push({
+                    text: responses[Math.floor(Math.random() * responses.length)],
+                    sent: false,
+                    timestamp: new Date().toISOString()
+                });
+                StorageHelper.save('friend-connect-conversations', conversations);
+                showConversation();
+            }, 500);
+
+            input.value = '';
+            StorageHelper.save('friend-connect-conversations', conversations);
+            showConversation();
+        });
+
+        document.getElementById('chat-input')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                document.getElementById('chat-send-btn').click();
+            }
+        });
+
+        // Initial render
+        renderConversationsList();
+    </script>
+</body>
+</html>
