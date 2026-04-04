@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Friend Connect</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .page-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            color: var(--text-primary);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .faq-search {
+            margin-bottom: 2rem;
+        }
+
+        .faq-search input {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+        }
+
+        .faq-search input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .faq-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .faq-category-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-weight: 500;
+        }
+
+        .faq-category-btn:hover,
+        .faq-category-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .faq-item {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all var(--transition-normal);
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: all var(--transition-fast);
+        }
+
+        .faq-question:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .faq-question h3 {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin: 0;
+            flex: 1;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: transform var(--transition-fast);
+            margin-left: 1rem;
+        }
+
+        .faq-item.open .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-normal) ease;
+            padding: 0 1.5rem;
+        }
+
+        .faq-item.open .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .faq-answer ul {
+            margin-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .faq-answer li {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .faq-question {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .faq-toggle {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+
+            .faq-categories {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo">💫 Friend Connect</h1>
+                <div class="nav-menu">
+                    <a href="../index.html" class="nav-link">Home</a>
+                    <a href="../pages/messages.html" class="nav-link">💬 Messages</a>
+                    <a href="about.html" class="nav-link">About Us</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="faq.html" class="nav-link active">FAQ</a>
+                    <a href="privacy.html" class="nav-link">Privacy</a>
+                    <a href="terms.html" class="nav-link">Terms</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-container">
+            <div class="page-header">
+                <h1>❓ Frequently Asked Questions</h1>
+                <p>Find answers to common questions about Friend Connect</p>
+            </div>
+
+            <div class="faq-search">
+                <input type="text" id="faq-search" placeholder="Search FAQ...">
+            </div>
+
+            <div class="faq-categories">
+                <button class="faq-category-btn active" data-category="all">All</button>
+                <button class="faq-category-btn" data-category="getting-started">Getting Started</button>
+                <button class="faq-category-btn" data-category="features">Features</button>
+                <button class="faq-category-btn" data-category="messaging">Messaging</button>
+                <button class="faq-category-btn" data-category="privacy">Privacy & Security</button>
+                <button class="faq-category-btn" data-category="troubleshooting">Troubleshooting</button>
+            </div>
+
+            <div id="faq-list">
+                <!-- FAQ items will be generated here -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Friend Connect. All rights reserved. | <a href="privacy.html" style="color: var(--primary-color); text-decoration: none;">Privacy</a> | <a href="terms.html" style="color: var(--primary-color); text-decoration: none;">Terms</a></p>
+    </footer>
+
+    <script>
+        const faqData = [
+            {
+                category: 'getting-started',
+                question: 'How do I get started with Friend Connect?',
+                answer: 'Simply open the app, browse profiles, and start connecting! You can like profiles, send friend requests, and message people directly. All data is stored locally on your device.'
+            },
+            {
+                category: 'getting-started',
+                question: 'Do I need to create an account?',
+                answer: 'No! Friend Connect runs entirely in your browser with no server needed. Just open the app and start using it immediately. Your data is stored locally.'
+            },
+            {
+                category: 'features',
+                question: 'How do I filter profiles?',
+                answer: 'Click the 🔍 Filters button in the top right. You can filter by age range, select multiple interests, and sort by different criteria. Click Apply Filters to see results.'
+            },
+            {
+                category: 'features',
+                question: 'What can I do with profiles?',
+                answer: 'You can: ❤️ Like profiles, 👥 Add friends, 💬 Send messages, 🔍 Search by interests, 📊 View statistics, and 📱 Toggle between grid and list views.'
+            },
+            {
+                category: 'features',
+                question: 'Can I search for specific people?',
+                answer: 'Yes! Use the search bar at the top to find profiles by name, location, interests, or keywords. Results update in real-time as you type.'
+            },
+            {
+                category: 'messaging',
+                question: 'How do I send a message?',
+                answer: 'Click the 💬 Message button on any profile card, or navigate to the Messages page (💬 icon in navbar). Type your message and press Enter to send.'
+            },
+            {
+                category: 'messaging',
+                question: 'Where are my messages stored?',
+                answer: 'All your messages are stored in your browser\'s local storage. They persist even if you close the app. Only you can see them - nothing is sent to a server.'
+            },
+            {
+                category: 'messaging',
+                question: 'How do I view all my conversations?',
+                answer: 'Go to the Messages page (💬 in navbar) or click the 💬 message icon. You\'ll see all conversations in the sidebar with message previews.'
+            },
+            {
+                category: 'privacy',
+                question: 'Is my data private?',
+                answer: 'Yes, completely! All data is processed and stored locally on your device. Nothing is sent to external servers. Read our Privacy Policy for details.'
+            },
+            {
+                category: 'privacy',
+                question: 'How is my data protected?',
+                answer: 'Your data is stored in your browser\'s localStorage, which is isolated from other websites. We don\'t use external services or trackers.'
+            },
+            {
+                category: 'privacy',
+                question: 'Can I delete my data?',
+                answer: 'Yes! You can clear your browser data or use your browser\'s developer tools to clear localStorage. Visit our Privacy Policy for more information.'
+            },
+            {
+                category: 'troubleshooting',
+                question: 'Why aren\'t profiles loading?',
+                answer: 'Try refreshing the page (Ctrl+F5). If the issue persists, check that you\'re using a modern browser (Chrome, Firefox, Safari, Edge).'
+            },
+            {
+                category: 'troubleshooting',
+                question: 'My messages aren\'t saving!',
+                answer: 'Make sure localStorage is enabled and you\'re not in Private/Incognito mode. Check your browser settings. In some cases, clearing cache helps.'
+            },
+            {
+                category: 'troubleshooting',
+                question: 'The styling looks wrong.',
+                answer: 'Try clearing your browser cache (Ctrl+F5). If CSS still doesn\'t load, check that all files are in the correct folders. Try a different browser.'
+            },
+            {
+                category: 'features',
+                question: 'Can I switch between grid and list views?',
+                answer: 'Yes! Click the ⊞/≡ toggle button in the stats bar. Grid view shows multiple cards per row, while list view shows one profile per row.'
+            },
+            {
+                category: 'features',
+                question: 'How many profiles are there?',
+                answer: 'We have 12+ diverse profiles with different interests, ages, and locations. More profiles can be added easily.'
+            },
+            {
+                category: 'messaging',
+                question: 'Do real people respond to messages?',
+                answer: 'No, responses are simulated for demonstration. In a production version, real users would respond. This is a preview/demo of the messaging system.'
+            },
+            {
+                category: 'getting-started',
+                question: 'Is Friend Connect free?',
+                answer: 'Yes, completely free! No subscriptions, no ads, no hidden charges. Just download and use.'
+            },
+            {
+                category: 'privacy',
+                question: 'Do you track my activity?',
+                answer: 'No tracking whatsoever. We don\'t collect analytics, cookies, or any user data. Everything stays on your device.'
+            },
+            {
+                category: 'troubleshooting',
+                question: 'What browsers are supported?',
+                answer: 'Chrome, Firefox, Safari, and Edge (latest versions). Mobile browsers: Chrome Mobile and Safari iOS.'
+            }
+        ];
+
+        let currentCategory = 'all';
+
+        function renderFAQ(category = 'all', searchTerm = '') {
+            const container = document.getElementById('faq-list');
+            let filtered = faqData;
+
+            if (category !== 'all') {
+                filtered = filtered.filter(item => item.category === category);
+            }
+
+            if (searchTerm) {
+                filtered = filtered.filter(item =>
+                    item.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    item.answer.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+
+            container.innerHTML = filtered.map((item, index) => `
+                <div class="faq-item" data-index="${index}">
+                    <div class="faq-question">
+                        <h3>${item.question}</h3>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>${item.answer}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add click listeners
+            container.querySelectorAll('.faq-item').forEach(item => {
+                item.querySelector('.faq-question').addEventListener('click', () => {
+                    item.classList.toggle('open');
+                });
+            });
+        }
+
+        // Category filtering
+        document.querySelectorAll('.faq-category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.faq-category-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.category;
+                renderFAQ(currentCategory, document.getElementById('faq-search').value);
+            });
+        });
+
+        // Search
+        document.getElementById('faq-search').addEventListener('input', (e) => {
+            renderFAQ(currentCategory, e.target.value);
+        });
+
+        // Initial render
+        renderFAQ();
+    </script>
+</body>
+</html>
