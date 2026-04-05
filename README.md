@@ -47,7 +47,8 @@ A modern, responsive web application for discovering and connecting with people.
 - 📄 Documentation and Presentation
   - Microsoft Word
   - Microsoft PowerPoint
-
+  - [FindFriends_Documentation.docx](https://github.com/codingburgas/2526-dual-education-findfriends/blob/main/Documentation/FindFriends_Documentation.docx)
+  - [FindFriends.pptx](https://github.com/codingburgas/2526-dual-education-findfriends/blob/main/Documentation/FindFriends.pptx)
 ---
 
 ## ✨ Complete Messaging System
