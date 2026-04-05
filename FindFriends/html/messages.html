@@ -12,10 +12,10 @@
     <header>
         <nav class="navbar">
             <div class="nav-container">
-                <h1 class="logo">💫 FindFriends</h1>
+                <h1 class="logo"> FindFriends</h1>
                 <div class="nav-menu">
                     <a href="../index.html" class="nav-link">Home</a>
-                    <a href="messages.html" class="nav-link active">💬 Messages</a>
+                    <a href="messages.html" class="nav-link active"> Messages</a>
                     <a href="about.html" class="nav-link">About Us</a>
                     <a href="privacy.html" class="nav-link">Privacy</a>
                     <a href="terms.html" class="nav-link">Terms</a>
@@ -156,6 +156,7 @@
             StorageHelper.save('friend-connect-conversations', conversations);
             showConversation();
         });
+        
 
         document.getElementById('chat-input')?.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
