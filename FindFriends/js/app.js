@@ -663,16 +663,38 @@ function sendMessage() {
     
     // Simulate received response after a short delay
     setTimeout(() => {
-        const responses = [
-            'That sounds great! 😊',
-            'I totally agree! 👍',
-            'Tell me more about that!',
-            'That\'s awesome! 🎉',
-            'I\'d love to do that sometime!',
-            'You\'re right! 💯',
-            'Haha, funny! 😂',
-            'That\'s so cool!'
-        ];
+    const responses = [
+        'That sounds great! 😊',
+        'I totally agree! 👍',
+        'Tell me more about that!',
+        'That\'s awesome! 🎉',
+        'I\'d love to do that sometime!',
+        'You\'re right! 💯',
+        'Haha, funny! 😂',
+        'That\'s so cool!',
+        'Wow, really? 😮',
+        'Nice, I like that!',
+        'Sounds like a plan!',
+        'I didn’t know that 🤔',
+        'That’s interesting!',
+        'Good point actually!',
+        'Haha that made me smile 😊',
+        'I’m in! 🙌',
+        'That would be fun!',
+        'You seem really cool 😎',
+        'I like your vibe!',
+        'That’s a great idea 💡',
+        'For sure!',
+        'Absolutely agree with you!',
+        'That’s kind of inspiring!',
+        'You’ve got a point there!',
+        'I never thought about it like that',
+        'That sounds exciting!',
+        'Let’s do it sometime!',
+        'Haha, that’s hilarious 😂',
+        'I’m curious now!',
+        'That made my day 😊'
+    ];
         
         const receivedMessage = {
             text: responses[Math.floor(Math.random() * responses.length)],
